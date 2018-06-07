@@ -36,47 +36,47 @@
 					<el-form-item label="店铺特点" style="white-space: nowrap;">
 						<span>品牌保证</span>
 						<el-switch on-text="" off-text="" v-model="formData.is_premium"></el-switch>
-						<span>蜂鸟专送</span>
-						<el-switch on-text="" off-text="" v-model="formData.delivery_mode"></el-switch>
+						<!--<span>蜂鸟专送</span>-->
+						<!--<el-switch on-text="" off-text="" v-model="formData.delivery_mode"></el-switch>-->
 						<span>新开店铺</span>
 						<el-switch on-text="" off-text="" v-model="formData.new"></el-switch>
 					</el-form-item>
-					<el-form-item style="white-space: nowrap;">
-						<span>外卖保</span>
-						<el-switch on-text="" off-text="" v-model="formData.bao"></el-switch>
-						<span>准时达</span>
-						<el-switch on-text="" off-text="" v-model="formData.zhun"></el-switch>
-						<span>开发票</span>
-						<el-switch on-text="" off-text="" v-model="formData.piao"></el-switch>
-					</el-form-item>
-					<el-form-item label="配送费" prop="float_delivery_fee">
+					<!--<el-form-item style="white-space: nowrap;">-->
+						<!--<span>外卖保</span>-->
+						<!--<el-switch on-text="" off-text="" v-model="formData.bao"></el-switch>-->
+						<!--<span>准时达</span>-->
+						<!--<el-switch on-text="" off-text="" v-model="formData.zhun"></el-switch>-->
+						<!--<span>开发票</span>-->
+						<!--<el-switch on-text="" off-text="" v-model="formData.piao"></el-switch>-->
+					<!--</el-form-item>-->
+					<el-form-item label="快递费" prop="float_delivery_fee">
 						<el-input-number v-model="formData.float_delivery_fee" :min="0" :max="20"></el-input-number>
 					</el-form-item>
-					<el-form-item label="起送价" prop="float_minimum_order_amount">
-						<el-input-number v-model="formData.float_minimum_order_amount" :min="0" :max="100"></el-input-number>
-					</el-form-item>
-					<el-form-item label="营业时间" style="white-space: nowrap;">
-						<el-time-select
-							placeholder="起始时间"
-							v-model="formData.startTime"
-							:picker-options="{
-							start: '05:30',
-							step: '00:15',
-							end: '23:30'
-							}">
-						</el-time-select>
-						<el-time-select
-							placeholder="结束时间"
-							v-model="formData.endTime"
-							:picker-options="{
-							start: '05:30',
-							step: '00:15',
-							end: '23:30',
-							minTime: formData.startTime
-							}">
-						</el-time-select>
-					</el-form-item>
-					
+					<!--<el-form-item label="起送价" prop="float_minimum_order_amount">-->
+						<!--<el-input-number v-model="formData.float_minimum_order_amount" :min="0" :max="100"></el-input-number>-->
+					<!--</el-form-item>-->
+					<!--<el-form-item label="营业时间" style="white-space: nowrap;">-->
+						<!--<el-time-select-->
+							<!--placeholder="起始时间"-->
+							<!--v-model="formData.startTime"-->
+							<!--:picker-options="{-->
+							<!--start: '05:30',-->
+							<!--step: '00:15',-->
+							<!--end: '23:30'-->
+							<!--}">-->
+						<!--</el-time-select>-->
+						<!--<el-time-select-->
+							<!--placeholder="结束时间"-->
+							<!--v-model="formData.endTime"-->
+							<!--:picker-options="{-->
+							<!--start: '05:30',-->
+							<!--step: '00:15',-->
+							<!--end: '23:30',-->
+							<!--minTime: formData.startTime-->
+							<!--}">-->
+						<!--</el-time-select>-->
+					<!--</el-form-item>-->
+
 					<el-form-item label="上传店铺头像">
 						<el-upload
 						  class="avatar-uploader"
@@ -99,17 +99,17 @@
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
 					</el-form-item>
-					<el-form-item label="上传餐饮服务许可证">
-						<el-upload
-						  class="avatar-uploader"
-						  :action="baseUrl + '/v1/addimg/shop'"
-						  :show-file-list="false"
-						  :on-success="handleServiceAvatarScucess"
-						  :before-upload="beforeAvatarUpload">
-						  <img v-if="formData.catering_service_license_image" :src="baseImgPath + formData.catering_service_license_image" class="avatar">
-						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-						</el-upload>
-					</el-form-item>
+					<!--<el-form-item label="上传餐饮服务许可证">-->
+						<!--<el-upload-->
+						  <!--class="avatar-uploader"-->
+						  <!--:action="baseUrl + '/v1/addimg/shop'"-->
+						  <!--:show-file-list="false"-->
+						  <!--:on-success="handleServiceAvatarScucess"-->
+						  <!--:before-upload="beforeAvatarUpload">-->
+						  <!--<img v-if="formData.catering_service_license_image" :src="baseImgPath + formData.catering_service_license_image" class="avatar">-->
+						  <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+						<!--</el-upload>-->
+					<!--</el-form-item>-->
 					<el-form-item label="优惠活动">
 						<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
 						    <el-option
@@ -142,8 +142,8 @@
 					      align="cneter"
 					      label="活动详情">
 					    </el-table-column>
-					    <el-table-column 
-					    	label="操作" 
+					    <el-table-column
+					    	label="操作"
 					    	width="120">
 					    <template scope="scope">
 					        <el-button
@@ -179,7 +179,7 @@
 					phone: '',
 					promotion_info: '',
 					float_delivery_fee: 5, //运费
-					float_minimum_order_amount: 20, //起价
+					// float_minimum_order_amount: 20, //起价
 					is_premium: true,
 					delivery_mode: true,
 					new: true,
@@ -191,7 +191,7 @@
        	 			image_path: '',
        	 			business_license_image: '',
        	 			catering_service_license_image: '',
-       	 			
+
 		        },
 		        rules: {
 					name: [
@@ -227,7 +227,7 @@
 			    baseUrl,
 			    baseImgPath,
 			    categoryOptions: [],
-			    selectedCategory: ['快餐便当', '简餐']
+			    selectedCategory: ['量心集']
     		}
     	},
     	components: {
@@ -336,7 +336,7 @@
 		        		this.$message({
 				            type: 'info',
 				            message: '请输入活动详情'
-				        }); 
+				        });
 		        		return
 		        	}
 		          	let newObj = {};
@@ -368,14 +368,14 @@
 					        	name: '进店领券',
 					        	description: value,
 		          			}
-		          			break;			
+		          			break;
 		          	}
 		          	this.activities.push(newObj);
 		        }).catch(() => {
 		          	this.$message({
 		            	type: 'info',
 		            	message: '取消输入'
-		          	});       
+		          	});
 		        });
 		    },
 		    handleDelete(index){
@@ -414,7 +414,7 @@
 				       	 			endTime: '',
 				       	 			image_path: '',
 				       	 			business_license_image: '',
-				       	 			catering_service_license_image: '',	
+				       	 			catering_service_license_image: '',
 						        };
 						        this.selectedCategory = ['快餐便当', '简餐'];
 						        this.activities = [{

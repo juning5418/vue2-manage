@@ -55,7 +55,7 @@
                     <el-button
                       size="mini"
                       type="Success"
-                      @click="addFood(scope.$index, scope.row)">添加食品</el-button>
+                      @click="addFood(scope.$index, scope.row)">添加商品</el-button>
                     <el-button
                       size="mini"
                       type="danger"
@@ -93,6 +93,9 @@
                     </el-form-item>
                     <el-form-item label="联系电话" label-width="100px">
                         <el-input v-model="selectTable.phone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="库存" label-width="100px">
+                        <el-input v-model="selectTable.stock"></el-input>
                     </el-form-item>
                     <el-form-item label="店铺分类" label-width="100px">
                         <el-cascader
@@ -145,6 +148,9 @@
             }
         },
         created(){
+            this.initData();
+        },
+        activated(){
             this.initData();
         },
     	components: {

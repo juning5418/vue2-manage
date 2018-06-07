@@ -11,42 +11,45 @@
                 <el-table-column type="expand">
                   <template scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="食品名称">
+                      <el-form-item label="商品名称">
                         <span>{{ props.row.name }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆名称">
+                      <el-form-item label="商店名称">
                         <span>{{ props.row.restaurant_name }}</span>
                       </el-form-item>
-                      <el-form-item label="食品 ID">
+                      <el-form-item label="商品 ID">
                         <span>{{ props.row.item_id }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆 ID">
+                      <el-form-item label="商店 ID">
                         <span>{{ props.row.restaurant_id }}</span>
                       </el-form-item>
-                      <el-form-item label="食品介绍">
+                      <el-form-item label="商品介绍">
                         <span>{{ props.row.description }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆地址">
+                      <el-form-item label="商店地址">
                         <span>{{ props.row.restaurant_address }}</span>
                       </el-form-item>
-                      <el-form-item label="食品评分">
+                      <el-form-item label="商品评分">
                         <span>{{ props.row.rating }}</span>
                       </el-form-item>
-                      <el-form-item label="食品分类">
+                      <el-form-item label="商品分类">
                         <span>{{ props.row.category_name }}</span>
                       </el-form-item>
                       <el-form-item label="月销量">
                         <span>{{ props.row.month_sales }}</span>
                       </el-form-item>
+                    <el-form-item label="库存">
+                        <span>{{ props.row.stock }}</span>
+                    </el-form-item>
                     </el-form>
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="食品名称"
+                  label="商品名称"
                   prop="name">
                 </el-table-column>
                 <el-table-column
-                  label="食品介绍"
+                  label="商品介绍"
                   prop="description">
                 </el-table-column>
                 <el-table-column
@@ -75,15 +78,18 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改食品信息" v-model="dialogFormVisible">
+            <el-dialog title="修改商品信息" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
-                    <el-form-item label="食品名称" label-width="100px">
+                    <el-form-item label="商品名称" label-width="100px">
                         <el-input v-model="selectTable.name" auto-complete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="食品介绍" label-width="100px">
+                    <el-form-item label="商品介绍" label-width="100px">
                         <el-input v-model="selectTable.description"></el-input>
                     </el-form-item>
-                    <el-form-item label="食品分类" label-width="100px">
+                    <el-form-item label="商品库存" label-width="100px" >
+                        <el-input-number v-model="selectTable.stock" :min="0" :max="1000"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="商品分类" label-width="100px">
 	                    <el-select v-model="selectIndex" :placeholder="selectMenu.label" @change="handleSelect">
 						    <el-option
 						      v-for="item in menuOptions"
@@ -93,7 +99,7 @@
 						    </el-option>
 						</el-select>
                     </el-form-item>
-                    <el-form-item label="食品图片" label-width="100px">
+                    <el-form-item label="商品图片" label-width="100px">
                         <el-upload
                           class="avatar-uploader"
                           :action="baseUrl + '/v1/addimg/food'"
@@ -123,7 +129,7 @@
 					      label="价格">
 					    </el-table-column>
 					    <el-table-column label="操作" >
-					    <template scope="scope"> 
+					    <template scope="scope">
 					        <el-button
 					          size="small"
 					          type="danger"
@@ -138,8 +144,8 @@
                 <el-button type="primary" @click="updateFood">确 定</el-button>
               </div>
             </el-dialog>
-			
-           
+
+
             <el-dialog title="添加规格" v-model="specsFormVisible">
 			  	<el-form :rules="specsFormrules" :model="specsForm">
 				    <el-form-item label="规格" label-width="100px" prop="specs">
@@ -200,6 +206,10 @@
         	this.restaurant_id = this.$route.query.restaurant_id;
             this.initData();
         },
+        activated(){
+            this.restaurant_id = this.$route.query.restaurant_id;
+            this.initData();
+        },
         computed: {
         	specs: function (){
         		let specs = [];
@@ -244,7 +254,7 @@
                         })
                     })
                 }catch(err){
-                    console.log('获取食品种类失败', err);
+                    console.log('获取商品种类失败', err);
                 }
             },
             async getFoods(){
@@ -254,6 +264,7 @@
                     const tableData = {};
                     tableData.name = item.name;
                     tableData.item_id = item.item_id;
+                    tableData.stock = item.stock;
                     tableData.description = item.description;
                     tableData.rating = item.rating;
                     tableData.month_sales = item.month_sales;
@@ -309,10 +320,10 @@
                 this.selectTable = {...row, ...{restaurant_name: restaurant.name, restaurant_address: restaurant.address, category_name: category.name}};
 
                 this.selectMenu = {label: category.name, value: row.category_id}
-                this.tableData.splice(row.index, 1, {...this.selectTable}); 
+                this.tableData.splice(row.index, 1, {...this.selectTable});
                 this.$nextTick(() => {
                     this.expendRow.push(row.index);
-                })  
+                })
                 if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
                 	this.getMenu();
                 }
@@ -327,7 +338,7 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '删除食品成功'
+                            message: '删除商品成功'
                         });
                         this.tableData.splice(index, 1);
                     }else{
@@ -338,7 +349,7 @@
                         type: 'error',
                         message: err.message
                     });
-                    console.log('删除食品失败')
+                    console.log('删除商品失败')
                 }
             },
             handleServiceAvatarScucess(res, file) {
@@ -369,7 +380,7 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '更新食品信息成功'
+                            message: '更新商品信息成功'
                         });
                         this.getFoods();
                     }else{

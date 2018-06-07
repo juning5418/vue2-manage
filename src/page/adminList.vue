@@ -59,6 +59,9 @@
         created(){
             this.initData();
         },
+        activated(){
+            this.initData();
+        },
         methods: {
             async initData(){
                 try{

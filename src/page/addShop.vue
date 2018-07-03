@@ -110,16 +110,16 @@
 						  <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
 						<!--</el-upload>-->
 					<!--</el-form-item>-->
-					<el-form-item label="优惠活动">
-						<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
-						    <el-option
-						      	v-for="item in options"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-						</el-select>
-					</el-form-item>
+					<!--<el-form-item label="优惠活动">-->
+						<!--<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">-->
+						    <!--<el-option-->
+						      	<!--v-for="item in options"-->
+						      	<!--:key="item.value"-->
+						      	<!--:label="item.label"-->
+						      	<!--:value="item.value">-->
+						    <!--</el-option>-->
+						<!--</el-select>-->
+					<!--</el-form-item>-->
 					<el-table
 					    :data="activities"
 					    style="min-width: 600px;margin-bottom: 20px;"
@@ -384,7 +384,7 @@
 		    submitForm(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
-						Object.assign(this.formData, {activities: this.activities}, {
+						Object.assign(this.formData,  {
 							category: this.selectedCategory.join('/')
 						})
 						try{
@@ -417,11 +417,7 @@
 				       	 			catering_service_license_image: '',
 						        };
 						        this.selectedCategory = ['快餐便当', '简餐'];
-						        this.activities = [{
-						        	icon_name: '减',
-						        	name: '满减优惠',
-						        	description: '满30减5，满60减8',
-							    }];
+
 							}else{
 								this.$message({
 					            	type: 'error',

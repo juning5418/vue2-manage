@@ -3,41 +3,60 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-  				<header class="form_header">选择商品类型</header>
-	  			<el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">
-		  			<el-row class="category_select">
-		  				<el-form-item label="商品种类">
-			  				<el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">
-							    <el-option
-							      	v-for="item in categoryForm.categoryList"
-							      	:key="item.value"
-							      	:label="item.label"
-							      	:value="item.value">
-							    </el-option>
-						  	</el-select>
-						</el-form-item>
-					</el-row>
-					<el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">
-						<div class="add_category">
-							<el-form-item label="商品种类" prop="name">
-								<el-input v-model="categoryForm.name"></el-input>
-							</el-form-item>
-							<el-form-item label="种类描述" prop="description">
-								<el-input v-model="categoryForm.description"></el-input>
-							</el-form-item>
-							<el-form-item>
-								<el-button type="primary" @click="submitcategoryForm('categoryForm')">提交</el-button>
-							</el-form-item>
-						</div>
-					</el-row>
-					<div class="add_category_button" @click="addCategoryFun">
-						<i class="el-icon-caret-top edit_icon" v-if="showAddCategory"></i>
-						<i class="el-icon-caret-bottom edit_icon" v-else slot="icon"></i>
-						<span>添加商品种类</span>
-					</div>
-	  			</el-form>
+  				<!--<header class="form_header">选择商品类型</header>-->
+	  			<!--<el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">-->
+		  			<!--<el-row class="category_select">-->
+
+
+                        <!--<el-form-item label="商品分类">-->
+                            <!--<el-cascader-->
+                                <!--:options="categoryOptions"-->
+                                <!--v-model="selectedCategory"-->
+                                <!--change-on-select-->
+                            <!--&gt;</el-cascader>-->
+                        <!--</el-form-item>-->
+
+		  				<!--<el-form-item label="商品种类">-->
+			  				<!--<el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">-->
+							    <!--<el-option-->
+							      	<!--v-for="item in categoryForm.categoryList"-->
+							      	<!--:key="item.value"-->
+							      	<!--:label="item.label"-->
+							      	<!--:value="item.value">-->
+							    <!--</el-option>-->
+						  	<!--</el-select>-->
+						<!--</el-form-item>-->
+					<!--</el-row>-->
+					<!--<el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">-->
+						<!--<div class="add_category">-->
+							<!--<el-form-item label="商品种类" prop="name">-->
+								<!--<el-input v-model="categoryForm.name"></el-input>-->
+							<!--</el-form-item>-->
+							<!--<el-form-item label="种类描述" prop="description">-->
+								<!--<el-input v-model="categoryForm.description"></el-input>-->
+							<!--</el-form-item>-->
+							<!--<el-form-item>-->
+								<!--<el-button type="primary" @click="submitcategoryForm('categoryForm')">提交</el-button>-->
+							<!--</el-form-item>-->
+						<!--</div>-->
+					<!--</el-row>-->
+					<!--<div class="add_category_button" @click="addCategoryFun">-->
+						<!--<i class="el-icon-caret-top edit_icon" v-if="showAddCategory"></i>-->
+						<!--<i class="el-icon-caret-bottom edit_icon" v-else slot="icon"></i>-->
+						<!--<span>添加商品种类</span>-->
+					<!--</div>-->
+	  			<!--</el-form>-->
 	  			<header class="form_header">添加商品</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
+
+                    <el-form-item label="商品分类">
+                        <el-cascader
+                            :options="categoryOptions"
+                            v-model="selectedCategory"
+                            change-on-select
+                        ></el-cascader>
+                    </el-form-item>
+
 	  				<el-form-item label="商品名称" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
 					</el-form-item>
@@ -139,7 +158,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {getCategory, addCategory, addFood} from '@/api/getData'
+    import {addFood,getCategories} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
     export default {
     	data(){
@@ -147,18 +166,22 @@
     			baseUrl,
     			baseImgPath,
     			restaurant_id: 1,
-    			categoryForm: {
-    				categoryList: [],
-    				categorySelect: '',
-    				name: '',
-    				description: '',
-    			},
+                categoryOptions: [],
+                selectedCategory:[],
+    			// categoryForm: {
+    			// 	categoryList: [],
+    			// 	categorySelect: '',
+    			// 	name: '',
+    			// 	description: '',
+                 //    selectedCategory:''
+    			// },
     			foodForm: {
     				name: '',
     				description: '',
     				image_path: '',
     				activity: '',
-    				attributes: [],
+                    selectedCategory:[],
+                    attributes: [],
                     stock: 0,
     				specs: [{
     					specs: '默认',
@@ -172,18 +195,15 @@
 					],
     			},
     			attributes: [{
-		          	value: '新品',
-		          	label: '新品'
+		          	value: '日常',
+		          	label: '日常'
 		        }, {
-		          	value: '推荐',
-		          	label: '推荐'
+		          	value: '礼品',
+		          	label: '礼品'
 		        },{
-                    value: '招牌',
-                    label: '招牌'
-                },{
-                    value: '礼物',
-                    label: '礼物'
-                },],
+                    value: '活动',
+                    label: '活动'
+                }],
     			showAddCategory: false,
     			foodSpecs: 'one',
     			dialogFormVisible: false,
@@ -230,63 +250,95 @@
     		this.initData();
     	},
     	computed: {
-    		selectValue: function (){
-    			return this.categoryForm.categoryList[this.categoryForm.categorySelect]||{}
-    		}
+    		// selectValue: function (){
+    		// 	return this.categoryForm.selectedCategory[this.categoryForm.categorySelect]||{}
+    		// }
     	},
     	methods: {
     		async initData(){
-    			try{
-    				const result = await getCategory(this.restaurant_id);
-	    			if (result.status == 1) {
-	    				result.category_list.map((item, index) => {
-	    					item.value = index;
-	    					item.label = item.name;
-	    				})
-	    				this.categoryForm.categoryList = result.category_list;
-	    			}else{
-	    				console.log(result)
-	    			}
-    			}catch(err){
-    				console.log(err)
-    			}
+
+
+                try{
+                    const categories = await getCategories();
+                    categories.forEach(item => {
+
+
+                        const addnew = {
+                            value: item.id,
+                            label: item.name,
+                            children: []
+                        }
+
+                        if (item.sub_categories.length) {
+
+                            item.sub_categories.forEach((subitem, index) => {
+
+                                addnew.children.push({
+                                    value: subitem.id,
+                                    label: subitem.name,
+                                })
+                            })
+
+                        }
+                        this.categoryOptions.push(addnew)
+
+                    })
+                }catch(err){
+                    console.log(err);
+                }
+
+
+    			// try{
+    			// 	const result = await getCategory(this.restaurant_id);
+	    		// 	if (result.status == 1) {
+	    		// 		result.category_list.map((item, index) => {
+	    		// 			item.value = index;
+	    		// 			item.label = item.name;
+	    		// 		})
+	    		// 		this.categoryForm.categoryList = result.category_list;
+	    		// 	}else{
+	    		// 		console.log(result)
+	    		// 	}
+    			// }catch(err){
+    			// 	console.log(err)
+    			// }
     		},
-		    addCategoryFun(){
-		    	this.showAddCategory = !this.showAddCategory;
-		    },
-		    submitcategoryForm(categoryForm) {
-				this.$refs[categoryForm].validate(async (valid) => {
-					if (valid) {
-						const params = {
-							name: this.categoryForm.name,
-							description: this.categoryForm.description,
-							restaurant_id: this.restaurant_id,
-						}
-						try{
-							const result = await addCategory(params);
-							if (result.status == 1) {
-								this.initData();
-								this.categoryForm.name = '';
-								this.categoryForm.description = '';
-								this.showAddCategory = false;
-								this.$message({
-					            	type: 'success',
-					            	message: '添加成功'
-					          	});
-							}
-						}catch(err){
-							console.log(err)
-						}
-					} else {
-						this.$notify.error({
-							title: '错误',
-							message: '请检查输入是否正确',
-							offset: 100
-						});
-						return false;
-					}
-				});
-			},
+		    // addCategoryFun(){
+		    // 	this.showAddCategory = !this.showAddCategory;
+		    // },
+            // submitcategoryForm(categoryForm) {
+			// 	this.$refs[categoryForm].validate(async (valid) => {
+			// 		if (valid) {
+			// 			const params = {
+			// 				name: this.categoryForm.name,
+			// 				description: this.categoryForm.description,
+			// 				restaurant_id: this.restaurant_id,
+			// 			}
+			// 			try{
+			// 				const result = await addCategory(params);
+			// 				if (result.status == 1) {
+			// 					this.initData();
+			// 					this.categoryForm.name = '';
+			// 					this.categoryForm.description = '';
+			// 					this.showAddCategory = false;
+			// 					this.$message({
+			// 		            	type: 'success',
+			// 		            	message: '添加成功'
+			// 		          	});
+			// 				}
+			// 			}catch(err){
+			// 				console.log(err)
+			// 			}
+			// 		} else {
+			// 			this.$notify.error({
+			// 				title: '错误',
+			// 				message: '请检查输入是否正确',
+			// 				offset: 100
+			// 			});
+			// 			return false;
+			// 		}
+			// 	});
+			// },
 			uploadImg(res, file) {
 				if (res.status == 1) {
 					this.foodForm.image_path = res.image_path;
@@ -329,10 +381,11 @@
 					if (valid) {
 						const params = {
 							...this.foodForm,
-							category_id: this.selectValue.id,
+							category_id: this.selectedCategory[0],
 							restaurant_id: this.restaurant_id,
 						}
 						try{
+
 							const result = await addFood(params);
 							if (result.status == 1) {
 								console.log(result)

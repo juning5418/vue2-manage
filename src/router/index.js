@@ -20,6 +20,13 @@ const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vue
 const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
 const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
+const bannersList = r => require.ensure([], () => r(require('@/page/bannersList')), 'bannersList');
+const addBanners = r => require.ensure([], () => r(require('@/page/addBanner')), 'addBanners');
+const addCategory = r => require.ensure([], () => r(require('@/page/addCategory')), 'addCategory');
+const categoryGoodsList = r => require.ensure([], () => r(require('@/page/categoryList')), 'categoryGoodsList');
+
+const addKeywords = r => require.ensure([], () => r(require('@/page/addKeywords')), 'addKeywords');
+const keywordsList = r => require.ensure([], () => r(require('@/page/keywordsList')), 'keywordsList');
 
 const routes = [
 	{
@@ -35,6 +42,14 @@ const routes = [
 			component: home,
 			meta: [],
 		},{
+            path: '/addCategory',
+            component: addCategory,
+            meta: ['添加数据', '添加类型'],
+        },{
+            path: '/addKeywords',
+            component: addKeywords,
+            meta: ['添加数据', '添加关键字'],
+        }, {
 			path: '/addShop',
 			component: addShop,
 			meta: ['添加数据', '添加商铺'],
@@ -43,6 +58,10 @@ const routes = [
 			component: addGoods,
 			meta: ['添加数据', '添加商品'],
 		},{
+            path: '/addBanners',
+            component: addBanners,
+            meta: ['添加数据', '添加banner'],
+        },{
 			path: '/userList',
 			component: userList,
 			meta: ['数据管理', '用户列表'],
@@ -55,14 +74,27 @@ const routes = [
 			component: foodList,
 			meta: ['数据管理', '食品列表'],
 		},{
-			path: '/orderList',
-			component: orderList,
-			meta: ['数据管理', '订单列表'],
+			path: '/keywordsList',
+			component: keywordsList,
+			meta: ['数据管理', '关键字列表'],
 		},{
+            path: '/orderList',
+            component: orderList,
+            meta: ['数据管理', '订单列表'],
+        },{
 			path: '/adminList',
 			component: adminList,
 			meta: ['数据管理', '管理员列表'],
 		},{
+            path:'/bannersList',
+            component: bannersList,
+            meta: ['数据管理', '首页banner管理'],
+        },{
+            path:'/categoryGoodsList',
+            component: categoryGoodsList,
+            meta: ['数据管理', '产品类型管理'],
+
+        },{
 			path: '/visitor',
 			component: visitor,
 			meta: ['图表', '用户分布'],

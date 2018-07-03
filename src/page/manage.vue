@@ -11,12 +11,20 @@
 						<el-menu-item index="foodList">商品列表</el-menu-item>
 						<el-menu-item index="orderList">订单列表</el-menu-item>
 						<el-menu-item index="adminList">管理员列表</el-menu-item>
-					</el-submenu>
+                        <el-menu-item index="bannersList">首页banner管理</el-menu-item>
+                        <el-menu-item index="categoryGoodsList?id=1&level=1">产品分类管理</el-menu-item>
+                        <el-menu-item index="keywordsList">关键字管理</el-menu-item>
+
+                    </el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-plus"></i>添加数据</template>
 						<el-menu-item index="addShop">添加商铺</el-menu-item>
 						<el-menu-item index="addGoods">添加商品</el-menu-item>
-					</el-submenu>
+                        <el-menu-item index="addBanners">添加banner</el-menu-item>
+                        <el-menu-item index="addCategory">添加分类</el-menu-item>
+                        <el-menu-item index="addKeywords">添加关键字</el-menu-item>
+
+                    </el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>图表</template>
 						<el-menu-item index="visitor">用户分布</el-menu-item>

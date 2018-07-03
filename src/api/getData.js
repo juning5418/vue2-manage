@@ -226,3 +226,109 @@ export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
  */
 
 export const getUserCity = () => fetch('/v1/user/city/count');
+
+
+/**
+ * 新增banner
+ */
+
+export const addBanner = data => fetch('/admin/addBanners', data, 'POST');
+
+/**
+ * 加载banner数量
+ * @param data
+ */
+
+export const getBannersCount = data => fetch('/admin/v2/banners/count', data);
+
+/**
+ * 加载banner
+ * @param data
+ */
+export const getBanners = data => fetch('/admin/v2/banners', data);
+
+/**
+ * 删除banner
+ * @param id
+ */
+export const deleteBanner = id => fetch('/admin/v2/banners/banner/' + id, {}, 'DELETE');
+
+/**
+ * 获取餐馆详细信息
+ */
+
+export const getBannerDetail = id => fetch('/admin/v2/banners/getBannersDetal/' + id);
+
+
+export const updateBanner = data => fetch('/admin/v2/banners/updateBanner',data, 'POST');
+
+
+/**
+ * 新增分类
+ */
+
+export const addCategoryGoods = data => fetch('/admin/addCategoryGoods', data, 'POST');
+
+/**
+ * 加载分类数量
+ * @param data
+ */
+
+// export const getBannersCount = data => fetch('/admin/v2/banners/count', data);
+
+/**
+ * 加载分类
+ * @param data
+ */
+export const getCategories = data => fetch('/admin/getCategories', data);
+
+/**
+ * 删除分类
+ * @param id
+ */
+export const deleteCategoryGoods = id => fetch('/admin/deleteCategoryGoods/' + id, {}, 'DELETE');
+
+
+
+export const updateCategoryGoods = data => fetch('/admin/updateCategoryGoods',data, 'POST');
+
+
+
+/**
+ * 新增keyword
+ */
+
+export const addKeyword = data => fetch('/admin/addKeywords', data, 'POST');
+
+/**
+ * 加载banner数量
+ * @param data
+ */
+
+export const getKeywordCount = data => fetch('/admin/getKeywords/count', data);
+
+/**
+ * 加载banner
+ * @param data
+ */
+export const getKeywords = data => fetch('/admin/getKeywords', data);
+
+/**
+ * 删除banner
+ * @param id
+ */
+export const deleteKeyword = id => fetch('/admin/deleteKeywords/' + id, {}, 'DELETE');
+
+/**
+ * 获取餐馆详细信息
+ */
+
+export const getKeywordDetail = id => fetch('/admin/getKeywordsDetal/' + id);
+
+
+export const updateKeyword = data => fetch('/admin/updateKeywords',data, 'POST');
+
+
+
+
+

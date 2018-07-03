@@ -21,6 +21,16 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': config.dev.env
     }),
+
+      // 配置全局使用
+      new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          jquery: "jquery",
+          'window.$': 'jquery',
+          "window.jQuery": "jquery",
+          jstree:"jstree"
+      }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

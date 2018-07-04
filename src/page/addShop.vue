@@ -7,16 +7,16 @@
 					<el-form-item label="店铺名称" prop="name">
 						<el-input v-model="formData.name"></el-input>
 					</el-form-item>
-					<el-form-item label="详细地址" prop="address">
-						<el-autocomplete
-						  v-model="formData.address"
-						  :fetch-suggestions="querySearchAsync"
-						  placeholder="请输入地址"
-						  style="width: 100%;"
-						  @select="addressSelect"
-						></el-autocomplete>
-						<span>当前城市：{{city.name}}</span>
-					</el-form-item>
+					<!--<el-form-item label="详细地址" prop="address">-->
+						<!--<el-autocomplete-->
+						  <!--v-model="formData.address"-->
+						  <!--:fetch-suggestions="querySearchAsync"-->
+						  <!--placeholder="请输入地址"-->
+						  <!--style="width: 100%;"-->
+						  <!--@select="addressSelect"-->
+						<!--&gt;</el-autocomplete>-->
+						<!--<span>当前城市：{{city.name}}</span>-->
+					<!--</el-form-item>-->
 					<el-form-item label="联系电话" prop="phone">
 						<el-input v-model.number="formData.phone" maxLength="11"></el-input>
 					</el-form-item>
@@ -26,13 +26,13 @@
 					<el-form-item label="店铺标语" prop="promotion_info">
 						<el-input v-model="formData.promotion_info"></el-input>
 					</el-form-item>
-					<el-form-item label="店铺分类">
-						<el-cascader
-						  :options="categoryOptions"
-						  v-model="selectedCategory"
-						  change-on-select
-						></el-cascader>
-					</el-form-item>
+					<!--<el-form-item label="店铺分类">-->
+						<!--<el-cascader-->
+						  <!--:options="categoryOptions"-->
+						  <!--v-model="selectedCategory"-->
+						  <!--change-on-select-->
+						<!--&gt;</el-cascader>-->
+					<!--</el-form-item>-->
 					<el-form-item label="店铺特点" style="white-space: nowrap;">
 						<span>品牌保证</span>
 						<el-switch on-text="" off-text="" v-model="formData.is_premium"></el-switch>

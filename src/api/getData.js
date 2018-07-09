@@ -332,3 +332,44 @@ export const updateKeyword = data => fetch('/admin/updateKeywords',data, 'POST')
 
 
 
+
+/**
+ * 新增banner
+ */
+
+export const addIndexType = data => fetch('/admin/addIndexType', data, 'POST');
+
+/**
+ * 加载banner数量
+ * @param data
+ */
+
+export const getIndexTypeCount = data => fetch('/admin/v2/indexType/count', data);
+
+/**
+ * 加载banner
+ * @param data
+ */
+export const getIndexTypes = data => fetch('/admin/v2/indexTypes', data);
+
+/**
+ * 删除banner
+ * @param id
+ */
+export const deleteIndexType = id => fetch('/admin/v2/indexTypes/indexType/' + id, {}, 'DELETE');
+
+/**
+ * 获取餐馆详细信息
+ */
+
+export const getIndexTypeDetail = id => fetch('/admin/v2/indexTypes/getIndexTypeDetal/' + id);
+
+
+export const updateIndexType = data => fetch('/admin/v2/indexTypes/updateIndexTyper',data, 'POST');
+
+
+
+
+
+
+

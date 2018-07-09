@@ -28,6 +28,11 @@ const categoryGoodsList = r => require.ensure([], () => r(require('@/page/catego
 const addKeywords = r => require.ensure([], () => r(require('@/page/addKeywords')), 'addKeywords');
 const keywordsList = r => require.ensure([], () => r(require('@/page/keywordsList')), 'keywordsList');
 
+
+
+const indexTypesList = r => require.ensure([], () => r(require('@/page/indexTypesList')), 'indexTypesList');
+const addIndexType = r => require.ensure([], () => r(require('@/page/addIndexType')), 'addIndexType');
+
 const routes = [
 	{
 		path: '/',
@@ -62,6 +67,10 @@ const routes = [
             component: addBanners,
             meta: ['添加数据', '添加banner'],
         },{
+            path: '/addIndexType',
+            component: addIndexType,
+            meta: ['添加数据', '添加首页分类'],
+        },{
 			path: '/userList',
 			component: userList,
 			meta: ['数据管理', '用户列表'],
@@ -89,6 +98,10 @@ const routes = [
             path:'/bannersList',
             component: bannersList,
             meta: ['数据管理', '首页banner管理'],
+        },{
+            path:'/indexTypesList',
+            component: indexTypesList,
+            meta: ['数据管理', '首页分类管理'],
         },{
             path:'/categoryGoodsList',
             component: categoryGoodsList,

@@ -60,7 +60,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 
 # 功能列表
 
-- [x] 登陆/注销 -- 完成 
+- [x] 登陆/注销 -- 完成
 - [x] 添加商铺 -- 完成
 - [x] 添加商品 -- 完成
 - [x] 数据展示 -- 完成
@@ -85,3 +85,4 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 ## License
 
 [GPL](https://github.com/bailicangdu/vue2-manage/blob/master/COPYING)
+    "chromedriver": "^2.27.2",

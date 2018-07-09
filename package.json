@@ -13,9 +13,9 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-      "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-manage port 8002'",
-      "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-manage port 8002'",
-      "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-manage port 8002'"
+      "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-manage --port 8002'",
+      "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-manage --port 8002'",
+      "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-manage --port 8002'"
 
   },
   "dependencies": {

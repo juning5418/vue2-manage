@@ -31,7 +31,7 @@ const keywordsList = r => require.ensure([], () => r(require('@/page/keywordsLis
 
 
 const indexTypesList = r => require.ensure([], () => r(require('@/page/indexTypesList')), 'indexTypesList');
-const addIndexType = r => require.ensure([], () => r(require('@/page/addIndexType')), 'addIndexType');
+const addIndexType = r => require.ensure([], () => r(require('@/page/addIndextype')), 'addIndexType');
 
 const routes = [
 	{

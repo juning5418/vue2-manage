@@ -1,6 +1,9 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
+        <router-link :to="{path:'addKeywords'}" >
+            <el-button type="primary"  >新增</el-button>
+        </router-link>
         <div class="table_container">
             <el-table
                 :data="tableData"

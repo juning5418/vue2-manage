@@ -12,17 +12,19 @@
 					<el-form-item label="banner链接" prop="url">
 						<el-input v-model="bannerForm.url"></el-input>
 					</el-form-item>
-					<el-form-item label="上传图片">
+					<el-form-item label="上传图片（2:1)">
 						<el-upload
 						  class="avatar-uploader"
 						  :action="baseUrl + '/v1/addimg/food'"
 						  :show-file-list="false"
 						  :on-success="uploadImg"
-						  :before-upload="beforeImgUpload">
+                          :on-remove="handleRemove"
+                          :before-upload="beforeImgUpload">
 						  <img v-if="bannerForm.image" :src="baseImgPath + bannerForm.image" class="avatar">
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
-					</el-form-item>
+                        <el-button @click="handleRemove">删除</el-button>
+                    </el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="addBanner('bannerForm')">确认添加</el-button>
 					</el-form-item>
@@ -68,7 +70,11 @@
     	},
     	methods: {
 
+            handleRemove (file) {
+                // 删除时在表单的某个字段里移除一个值
+                this.bannerForm.image = null;
 
+            },
 			uploadImg(res, file) {
 				if (res.status == 1) {
 					this.bannerForm.image = res.image_path;
@@ -115,7 +121,8 @@
 				    				url: '',
 				    				image: ''
 				    			}
-							}else{
+                                this.$router.push({ path: 'bannersList'})
+                            }else{
 								this.$message({
 					            	type: 'error',
 					            	message: result.message

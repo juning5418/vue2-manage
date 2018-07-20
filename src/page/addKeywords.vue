@@ -1,6 +1,7 @@
 <template>
     <div>
      	<head-top></head-top>
+
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
 
@@ -95,7 +96,9 @@
 					          	this.bannerForm = {
 				    				name: '',
 				    			}
-							}else{
+                                this.$router.push({ path: 'keywordsList'})
+
+                            }else{
 								this.$message({
 					            	type: 'error',
 					            	message: result.message

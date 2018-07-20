@@ -1,6 +1,9 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
+        <router-link :to="{path:'addBanners'}" >
+            <el-button type="primary"  >新增</el-button>
+        </router-link>
         <div class="table_container">
             <el-table
                 :data="tableData"
@@ -31,6 +34,9 @@
 
                 <el-table-column label="操作" width="160">
                   <template scope="scope">
+                      <el-button
+                          size="small"
+                          @click="handleEdit(scope.row)">审核</el-button>
                     <el-button
                       size="small"
                       @click="handleEdit(scope.row)">编辑</el-button>

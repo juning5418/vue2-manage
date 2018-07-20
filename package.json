@@ -13,10 +13,9 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-      "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-manage --port 8002'",
-      "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-manage --port 8002'",
-      "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-manage --port 8002'"
-
+    "start": "cross-env NODE_ENV=local pm2 start node build/dev-server.js --name 'vue2-manage-8002'",
+    "stop": "cross-env NODE_ENV=local pm2 stop node build/dev-server.js --name 'vue2-manage-8002'",
+    "restart": "cross-env NODE_ENV=local pm2 restart node build/dev-server.js --name 'vue2-manage-8002'"
   },
   "dependencies": {
     "echarts": "^3.5.4",
@@ -27,14 +26,12 @@
     "vue-router": "^2.3.1",
     "vue-simplemde": "^0.3.8",
     "vuex": "^2.3.1",
-      "jquery": "^3.3.1",
-      "jstree": "^3.3.5",
-      "pm2": "^2.8.0"
-
-
+    "jquery": "^3.3.1",
+    "jstree": "^3.3.5",
+    "pm2": "^2.8.0"
   },
   "devDependencies": {
-      "autoprefixer": "^6.7.2",
+    "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",

@@ -12,17 +12,19 @@
 					<el-form-item label="排序" prop="sort">
 						<el-input v-model="indexForm.sort"></el-input>
 					</el-form-item>
-					<el-form-item label="上传图片">
+					<el-form-item label="上传图片（2:1)">
 						<el-upload
 						  class="avatar-uploader"
 						  :action="baseUrl + '/v1/addimg/food'"
 						  :show-file-list="false"
 						  :on-success="uploadImg"
-						  :before-upload="beforeImgUpload">
+                          :on-remove="handleRemove"
+                          :before-upload="beforeImgUpload">
 						  <img v-if="indexForm.image" :src="baseImgPath + indexForm.image" class="avatar">
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
-					</el-form-item>
+                        <el-button @click="handleRemove">删除</el-button>
+                    </el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="addIndex('indexForm')">确认添加</el-button>
 					</el-form-item>
@@ -66,7 +68,11 @@
     	},
     	methods: {
 
+            handleRemove (file) {
+                // 删除时在表单的某个字段里移除一个值
+                this.indexForm.image = null;
 
+            },
 			uploadImg(res, file) {
 				if (res.status == 1) {
 					this.indexForm.image = res.image_path;
@@ -113,6 +119,7 @@
 				    				url: '',
 				    				image: ''
 				    			}
+                                this.$router.push({ path: 'indexTypesList'})
 							}else{
 								this.$message({
 					            	type: 'error',

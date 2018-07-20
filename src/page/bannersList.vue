@@ -34,9 +34,16 @@
 
                 <el-table-column label="操作" width="160">
                   <template scope="scope">
-                      <el-button
+                      <el-button v-if="scope.row.auth==0"
                           size="small"
-                          @click="handleEdit(scope.row)">审核</el-button>
+                          @click="auth(scope.row)">
+                         审核通过
+                      </el-button>
+                      <el-button v-else
+                                 size="small"
+                                 @click="auth(scope.row)">
+                          撤销审核
+                      </el-button>
                     <el-button
                       size="small"
                       @click="handleEdit(scope.row)">编辑</el-button>
@@ -65,17 +72,22 @@
                     <el-form-item label="banner连接" label-width="100px">
                         <el-input v-model="selectTable.url"></el-input>
                     </el-form-item>
-
+                    <el-form-item label="排序" label-width="100px" >
+                        <el-input v-model="selectTable.sort" type="number"></el-input>
+                    </el-form-item>
                     <el-form-item label="banner图片" label-width="100px">
                         <el-upload
                           class="avatar-uploader"
                           :action="baseUrl + '/v1/addimg/food'"
                           :show-file-list="false"
+                          :on-remove="handleRemove"
                           :on-success="handleServiceAvatarScucess"
                           :before-upload="beforeAvatarUpload">
                           <img v-if="selectTable.image" :src="baseImgPath + selectTable.image" class="avatar">
                           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
+                        <el-button @click="handleRemove">删除</el-button>
+
                     </el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
@@ -90,7 +102,7 @@
 <script>
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
-    import {getBannersCount,getBanners,addBanner,getBannerDetail,deleteBanner,updateBanner} from '@/api/getData'
+    import {getBannersCount,getBanners,addBanner,getBannerDetail,deleteBanner,updateBanner,authBanner} from '@/api/getData'
     export default {
         data(){
             return {
@@ -146,6 +158,8 @@
                     tableData.id = item.id;
                     tableData.url = item.url;
                     tableData.image = item.image;
+                    tableData.auth = item.auth?item.auth:0;
+                    tableData.sort = item.sort?item.sort:0;
                     this.tableData.push(tableData);
                 })
             },
@@ -173,6 +187,32 @@
                     const index = this.expendRow.indexOf(row.index);
                     this.expendRow.splice(index, 1)
                 }
+            },
+            async auth(row){
+                try{
+                    if(row.auth==0){
+                        row.auth=1;
+                    }else{
+                        row.auth=0;
+                    }
+                    const postData = {id:row.id,auth:row.auth};
+                    const res = await authBanner(postData)
+                    if (res.status == 1) {
+                        this.$message({
+                            type: 'success',
+                            message: '操作成功'
+                        });
+                        this.getBanners();
+                    }else{
+                        this.$message({
+                            type: 'error',
+                            message: res.message
+                        });
+                    }
+                }catch(err){
+                    console.log('操作失败', err);
+                }
+
             },
             handleEdit(row) {
             	this.getSelectItemData(row, 'edit')
@@ -218,6 +258,11 @@
                 }else{
                     this.$message.error('上传图片失败！');
                 }
+            },
+            handleRemove (file) {
+                // 删除时在表单的某个字段里移除一个值
+                this.bannerForm.image = null;
+
             },
             beforeAvatarUpload(file) {
                 const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png');

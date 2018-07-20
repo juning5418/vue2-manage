@@ -263,6 +263,9 @@ export const getBannerDetail = id => fetch('/admin/v2/banners/getBannersDetal/' 
 export const updateBanner = data => fetch('/admin/v2/banners/updateBanner',data, 'POST');
 
 
+export const authBanner = data => fetch('/admin/v2/banners/authBanner',data, 'POST');
+
+
 /**
  * 新增分类
  */
@@ -367,6 +370,7 @@ export const getIndexTypeDetail = id => fetch('/admin/v2/indexTypes/getIndexType
 
 export const updateIndexType = data => fetch('/admin/v2/indexTypes/updateIndexTyper',data, 'POST');
 
+export const authIndexTyper = data => fetch('/admin/v2/indexTypes/authIndexTyper',data, 'POST');
 
 
 

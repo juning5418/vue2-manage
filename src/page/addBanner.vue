@@ -12,6 +12,9 @@
 					<el-form-item label="banner链接" prop="url">
 						<el-input v-model="bannerForm.url"></el-input>
 					</el-form-item>
+                    <el-form-item label="排序" prop="sort">
+                        <el-input v-model="bannerForm.sort" type="number"></el-input>
+                    </el-form-item>
 					<el-form-item label="上传图片（2:1)">
 						<el-upload
 						  class="avatar-uploader"

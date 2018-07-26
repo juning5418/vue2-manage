@@ -395,8 +395,8 @@
 					          	this.formData = {
 									name: '', //店铺名称
 									address: '', //地址
-									latitude: '',
-									longitude: '',
+									latitude: '0',
+									longitude: '0',
 									description: '', //介绍
 									phone: '',
 									promotion_info: '',

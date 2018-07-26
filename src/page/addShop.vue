@@ -197,9 +197,7 @@
 					name: [
 						{ required: true, message: '请输入店铺名称', trigger: 'blur' },
 					],
-					address: [
-						{ required: true, message: '请输入详细地址', trigger: 'blur' }
-					],
+
 					phone: [
 						{ required: true, message: '请输入联系电话' },
 						{ type: 'number', message: '电话号码必须是数字' }

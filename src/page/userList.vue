@@ -20,6 +20,20 @@
                   label="用户姓名"
                   width="220">
                 </el-table-column>
+
+                <el-table-column
+                    property="mobile"
+                    label="手机"
+                    width="220">
+                </el-table-column>
+
+
+                <el-table-column
+                    property="wx"
+                    label="微信"
+                    width="220">
+                </el-table-column>
+
                 <el-table-column
                   property="city"
                   label="注册地址">
@@ -107,6 +121,8 @@
                     const tableData = {};
                     tableData.username = item.username;
                     tableData.registe_time = item.registe_time;
+                    tableData.mobile = item.mobile;
+                    tableData.wx = item.wx;
                     tableData.city = item.city;
                     this.tableData.push(tableData);
                 })

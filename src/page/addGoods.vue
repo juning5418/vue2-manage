@@ -3,49 +3,7 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-  				<!--<header class="form_header">选择商品类型</header>-->
-	  			<!--<el-form :model="categoryForm" ref="categoryForm" label-width="110px" class="form">-->
-		  			<!--<el-row class="category_select">-->
 
-
-                        <!--<el-form-item label="商品分类">-->
-                            <!--<el-cascader-->
-                                <!--:options="categoryOptions"-->
-                                <!--v-model="selectedCategory"-->
-                                <!--change-on-select-->
-                            <!--&gt;</el-cascader>-->
-                        <!--</el-form-item>-->
-
-		  				<!--<el-form-item label="商品种类">-->
-			  				<!--<el-select v-model="categoryForm.categorySelect" :placeholder="selectValue.label" style="width:100%;">-->
-							    <!--<el-option-->
-							      	<!--v-for="item in categoryForm.categoryList"-->
-							      	<!--:key="item.value"-->
-							      	<!--:label="item.label"-->
-							      	<!--:value="item.value">-->
-							    <!--</el-option>-->
-						  	<!--</el-select>-->
-						<!--</el-form-item>-->
-					<!--</el-row>-->
-					<!--<el-row class="add_category_row" :class="showAddCategory? 'showEdit': ''">-->
-						<!--<div class="add_category">-->
-							<!--<el-form-item label="商品种类" prop="name">-->
-								<!--<el-input v-model="categoryForm.name"></el-input>-->
-							<!--</el-form-item>-->
-							<!--<el-form-item label="种类描述" prop="description">-->
-								<!--<el-input v-model="categoryForm.description"></el-input>-->
-							<!--</el-form-item>-->
-							<!--<el-form-item>-->
-								<!--<el-button type="primary" @click="submitcategoryForm('categoryForm')">提交</el-button>-->
-							<!--</el-form-item>-->
-						<!--</div>-->
-					<!--</el-row>-->
-					<!--<div class="add_category_button" @click="addCategoryFun">-->
-						<!--<i class="el-icon-caret-top edit_icon" v-if="showAddCategory"></i>-->
-						<!--<i class="el-icon-caret-bottom edit_icon" v-else slot="icon"></i>-->
-						<!--<span>添加商品种类</span>-->
-					<!--</div>-->
-	  			<!--</el-form>-->
 	  			<header class="form_header">添加商品</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
 
@@ -63,13 +21,11 @@
 					<el-form-item label="商品活动" prop="activity">
 						<el-input v-model="foodForm.activity"></el-input>
 					</el-form-item>
-					<el-form-item label="商品详情" prop="description">
-						<el-input v-model="foodForm.description"></el-input>
-					</el-form-item>
+
                     <el-form-item label="商品库存" prop="stock">
                         <el-input-number v-model="foodForm.stock" :min="0" :max="1000"></el-input-number>
                     </el-form-item>
-					<el-form-item label="上传商品图片">
+					<el-form-item label="上传商品图片" >
 						<el-upload
 						  class="avatar-uploader"
 						  :action="baseUrl + '/v1/addimg/food'"
@@ -98,6 +54,9 @@
 						<el-form-item label="包装费">
 							<el-input-number v-model="foodForm.specs[0].packing_fee" :min="0" :max="100"></el-input-number>
 						</el-form-item>
+                        <el-form-item label="快递费">
+                            <el-input-number v-model="foodForm.specs[0].delivery_fee" :min="0" :max="100"></el-input-number>
+                        </el-form-item>
 						<el-form-item label="价格">
 							<el-input-number v-model="foodForm.specs[0].price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
@@ -112,10 +71,14 @@
 						      prop="specs"
 						      label="规格">
 						    </el-table-column>
-						    <!--<el-table-column-->
-						      <!--prop="packing_fee"-->
-						      <!--label="包装费">-->
-						    <!--</el-table-column>-->
+                            <el-table-column
+                                prop="packing_fee"
+                                label="包装费">
+                            </el-table-column>
+						    <el-table-column
+						      prop="delivery_fee"
+						      label="快递费">
+						    </el-table-column>
 						    <el-table-column
 						      prop="price"
 						      label="价格">
@@ -130,6 +93,22 @@
 						    </el-table-column>
 						</el-table>
 					</el-row>
+
+                    <el-form-item label="商品详情"  prop="description">
+                        <!--<el-input v-model="foodForm.description"></el-input>-->
+                        <quill-editor v-model="foodForm.description"
+                                      ref="myQuillEditor"
+                                      class="editer"
+                                      :options="editorOption"
+                                      @ready="onEditorReady($event)">
+                        </quill-editor>
+
+                        <!--<div class="edit_container">-->
+                        <!---->
+                        <!--</div>-->
+
+                    </el-form-item>
+
 					<el-form-item>
 						<el-button type="primary" @click="addFood('foodForm')">确认添加商品</el-button>
 					</el-form-item>
@@ -139,9 +118,12 @@
 					    <el-form-item label="规格" label-width="100px" prop="specs">
 					     	<el-input v-model="specsForm.specs" auto-complete="off"></el-input>
 					    </el-form-item>
-					    <!--<el-form-item label="包装费" label-width="100px">-->
-							<!--<el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>-->
-						<!--</el-form-item>-->
+                        <el-form-item label="包装" label-width="100px">
+                            <el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>
+                        </el-form-item>
+					    <el-form-item label="快递" label-width="100px">
+							<el-input-number v-model="specsForm.delivery_fee" :min="0" :max="100"></el-input-number>
+						</el-form-item>
 						<el-form-item label="价格" label-width="100px">
 							<el-input-number v-model="specsForm.price" :min="0" :max="10000"></el-input-number>
 						</el-form-item>
@@ -160,10 +142,15 @@
  	import headTop from '@/components/headTop'
     import {addFood,getCategories} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
+    import { quillEditor } from 'vue-quill-editor'
+
     export default {
     	data(){
     		return {
     			baseUrl,
+                editorOption: {
+
+                },
     			baseImgPath,
     			restaurant_id: 1,
                 categoryOptions: [],
@@ -186,7 +173,8 @@
     				specs: [{
     					specs: '默认',
 			          	packing_fee: 0,
-			          	price: 20,
+                        delivery_fee:0,
+                        price: 20,
     				}],
     			},
     			foodrules: {
@@ -210,6 +198,7 @@
 		        specsForm: {
 		          	specs: '',
 		          	packing_fee: 0,
+                    delivery_fee:0,
 		          	price: 20,
 		        },
 		        specsFormrules: {
@@ -221,6 +210,7 @@
     	},
     	components: {
     		headTop,
+            quillEditor
     	},
     	created(){
     		if (this.$route.query.restaurant_id) {
@@ -250,11 +240,18 @@
     		this.initData();
     	},
     	computed: {
+
+            editor() {
+                return this.$refs.myQuillEditor.quill
+            }
     		// selectValue: function (){
     		// 	return this.categoryForm.selectedCategory[this.categoryForm.categorySelect]||{}
     		// }
     	},
     	methods: {
+            onEditorReady(editor) {
+                console.log('editor ready!', editor)
+            },
     		async initData(){
 
 
@@ -362,6 +359,7 @@
 				this.foodForm.specs.push({...this.specsForm});
 				this.specsForm.specs = '';
 				this.specsForm.packing_fee = 0;
+                this.specsForm.delivery_fee =0;
 				this.specsForm.price = 20;
 				this.dialogFormVisible = false;
 			},
@@ -403,10 +401,13 @@
 				    				specs: [{
 				    					specs: '默认',
 							          	packing_fee: 0,
+                                        delivery_fee:0,
 							          	price: 20,
 				    				}],
 				    			}
-							}else{
+                                this.$router.push({ path: 'foodList'});
+
+                            }else{
 								this.$message({
 					            	type: 'error',
 					            	message: result.message
@@ -431,6 +432,16 @@
 
 <style lang="less">
 	@import '../style/mixin';
+
+
+    /*.editer{*/
+        /*height: 350px;*/
+    /*}*/
+
+    /*.edit_container{*/
+        /*padding: 40px;*/
+        /*margin-bottom: 40px;*/
+    /*}*/
 	.form{
 		min-width: 400px;
 		margin-bottom: 30px;

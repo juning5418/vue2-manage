@@ -13,7 +13,7 @@
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-form-item label="商品名称">
                         <span>{{ props.row.name }}</span>
-                      </el-form-item>
+                      </el-form-item>ss
                       <el-form-item label="商店名称">
                         <span>{{ props.row.restaurant_name }}</span>
                       </el-form-item>
@@ -23,8 +23,11 @@
                       <el-form-item label="商店 ID">
                         <span>{{ props.row.restaurant_id }}</span>
                       </el-form-item>
-                      <el-form-item label="商品介绍">
-                        <span>{{ props.row.description }}</span>
+                        <!--<el-form-item label="快递费">-->
+                            <!--<span>{{ props.row.description }}</span>-->
+                        <!--</el-form-item>-->
+                      <el-form-item label="快递费">
+                        <span>{{ props.row.delivery_fee }}</span>
                       </el-form-item>
                       <el-form-item label="商店地址">
                         <span>{{ props.row.restaurant_address }}</span>
@@ -48,10 +51,10 @@
                   label="商品名称"
                   prop="name">
                 </el-table-column>
-                <el-table-column
-                  label="商品介绍"
-                  prop="description">
-                </el-table-column>
+                <!--<el-table-column-->
+                  <!--label="商品介绍"-->
+                  <!--prop="description">-->
+                <!--</el-table-column>-->
                 <el-table-column
                   label="评分"
                   prop="rating">
@@ -83,9 +86,9 @@
                     <el-form-item label="商品名称" label-width="100px">
                         <el-input v-model="selectTable.name" auto-complete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="商品介绍" label-width="100px">
-                        <el-input v-model="selectTable.description"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item label="商品介绍" label-width="100px">-->
+                        <!--<el-input v-model="selectTable.description"></el-input>-->
+                    <!--</el-form-item>-->
                     <el-form-item label="商品库存" label-width="100px" >
                         <el-input-number v-model="selectTable.stock" :min="0" :max="1000"></el-input-number>
                     </el-form-item>
@@ -110,6 +113,15 @@
                           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
+
+                    <el-form-item label="商品详情"  label-width="100px">
+                        <quill-editor v-model="selectTable.description"
+                                      ref="myQuillEditor"
+                                      class="editer"
+                                      :options="editorOption"
+                                      @ready="onEditorReady($event)">
+                        </quill-editor>
+                    </el-form-item>
                 </el-form>
                 <el-row style="overflow: auto; text-align: center;">
 	                <el-table
@@ -124,6 +136,10 @@
 					      prop="packing_fee"
 					      label="包装费">
 					    </el-table-column>
+                        <el-table-column
+                            prop="delivery_fee"
+                            label="快递费">
+                        </el-table-column>
 					    <el-table-column
 					      prop="price"
 					      label="价格">
@@ -137,6 +153,8 @@
 					    </template>
 					    </el-table-column>
 					</el-table>
+
+
 					<el-button type="primary" @click="specsFormVisible = true" style="margin-bottom: 10px;">添加规格</el-button>
 				</el-row>
               <div slot="footer" class="dialog-footer">
@@ -154,6 +172,9 @@
 				    <el-form-item label="包装费" label-width="100px">
 						<el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>
 					</el-form-item>
+                    <el-form-item label="快递费" label-width="100px">
+                        <el-input-number v-model="specsForm.delivery_fee" :min="0" :max="100"></el-input-number>
+                    </el-form-item>
 					<el-form-item label="价格" label-width="100px">
 						<el-input-number v-model="specsForm.price" :min="0" :max="10000"></el-input-number>
 					</el-form-item>
@@ -171,9 +192,14 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
     import {getFoods, getFoodsCount, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
+    import { quillEditor } from 'vue-quill-editor'
+
     export default {
         data(){
             return {
+                editorOption: {
+
+                },
                 baseUrl,
                 baseImgPath,
                 restaurant_id: null,
@@ -191,6 +217,7 @@
                 specsForm: {
 		          	specs: '',
 		          	packing_fee: 0,
+                    delivery_fee:0,
 		          	price: 20,
 		        },
                 specsFormrules: {
@@ -211,6 +238,9 @@
             this.initData();
         },
         computed: {
+            editor() {
+                return this.$refs.myQuillEditor.quill
+            },
         	specs: function (){
         		let specs = [];
         		if (this.selectTable.specfoods) {
@@ -218,6 +248,7 @@
 	        			specs.push({
 	        				specs: item.specs_name,
 	        				packing_fee: item.packing_fee,
+                            delivery_fee:item.delivery_fee,
 	        				price: item.price,
 	        			})
 	        		})
@@ -227,8 +258,13 @@
         },
     	components: {
     		headTop,
-    	},
+            quillEditor
+
+        },
         methods: {
+            onEditorReady(editor) {
+                console.log('editor ready!', editor)
+            },
             async initData(){
                 try{
                     const countData = await getFoodsCount({restaurant_id: this.restaurant_id});
@@ -288,6 +324,7 @@
 				this.specs.push({...this.specsForm});
 				this.specsForm.specs = '';
 				this.specsForm.packing_fee = 0;
+                this.specsForm.delivery_fee=0;
 				this.specsForm.price = 20;
 				this.specsFormVisible = false;
 			},

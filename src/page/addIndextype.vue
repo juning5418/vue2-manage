@@ -15,12 +15,12 @@
 					<el-form-item label="上传图片（2:1)">
 						<el-upload
 						  class="avatar-uploader"
-						  :action="baseUrl + '/v1/addimg/food'"
+						  :action="baseUrl + '/v1/addimg/indextype'"
 						  :show-file-list="false"
 						  :on-success="uploadImg"
                           :on-remove="handleRemove"
                           :before-upload="beforeImgUpload">
-						  <img v-if="indexForm.image" :src="baseImgPath + indexForm.image" class="avatar">
+						  <img v-if="indexForm.image" :src="baseImgPath + 'indextype/'+ indexForm.image" class="avatar">
 						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						</el-upload>
                         <el-button @click="handleRemove">删除</el-button>

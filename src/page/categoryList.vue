@@ -2,6 +2,19 @@
     <div class="fillcontain">
         <head-top></head-top>
         <div class="table_container">
+
+
+            <el-tree
+                :data="data2"
+                :props="defaultProps"
+                show-checkbox
+                node-key="id"
+                default-expand-all
+                :expand-on-click-node="false"
+                :render-content="renderContent">
+            </el-tree>
+
+
             <el-table
                 :data="tableData"
                 style="width: 100%">
@@ -74,6 +87,7 @@
 <script>
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
+
     import {getCategories,updateCategoryGoods,deleteCategoryGoods} from '@/api/getData'
     export default {
         data(){
@@ -148,23 +162,7 @@
 
                     }
 
-                    //
-                    // else if(this.level==3){
-                    //     let newCategories = item.sub_categories;
-                    //     newCategories.forEach(item1 => {
-                    //         if(item1.id==this.queryId){
-                    //             let newCategories1 = item1.sub_categories;
-                    //             newCategories1.forEach(item2 => {
-                    //                 tableData.name = item2.name;
-                    //                 tableData.sort = item2.sort;
-                    //                 tableData.id = item2.id;
-                    //                 tableData.level = item2.level;
-                    //                 tableData.image_path = item2.image_path;
-                    //                 this.tableData.push(tableData);
-                    //             });
-                    //         }
-                    //     })
-                    // }
+
 
                 })
                 console.log( this.tableData);

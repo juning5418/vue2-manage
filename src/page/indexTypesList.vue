@@ -77,12 +77,12 @@
                     <el-form-item label="图片" label-width="100px">
                         <el-upload
                           class="avatar-uploader"
-                          :action="baseUrl + '/v1/addimg/food'"
+                          :action="baseUrl + '/v1/addimg/indextype'"
                           :show-file-list="false"
                           :on-remove="handleRemove"
                           :on-success="handleServiceAvatarScucess"
                           :before-upload="beforeAvatarUpload">
-                          <img v-if="selectTable.image" :src="baseImgPath + selectTable.image" class="avatar">
+                          <img v-if="selectTable.image" :src="baseImgPath + 'indextype/' + selectTable.image" class="avatar">
                           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                         <el-button @click="handleRemove">删除</el-button>

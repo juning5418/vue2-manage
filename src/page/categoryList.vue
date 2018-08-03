@@ -4,15 +4,15 @@
         <div class="table_container">
 
 
-            <el-tree
-                :data="data2"
-                :props="defaultProps"
-                show-checkbox
-                node-key="id"
-                default-expand-all
-                :expand-on-click-node="false"
-                :render-content="renderContent">
-            </el-tree>
+            <!--<el-tree-->
+                <!--:data="data2"-->
+                <!--:props="defaultProps"-->
+                <!--show-checkbox-->
+                <!--node-key="id"-->
+                <!--default-expand-all-->
+                <!--:expand-on-click-node="false"-->
+                <!--:render-content="renderContent">-->
+            <!--</el-tree>-->
 
 
             <el-table
@@ -29,6 +29,12 @@
 
                 <el-table-column label="操作" width="200">
                   <template scope="scope">
+
+                      <el-button
+                                 size="mini"
+                                 type="Success"
+                                 @click="back(scope.$index, scope.row)">返回上一级分类</el-button>
+
                       <el-button v-if="level==1"
                       size="mini"
                       type="Success"
@@ -192,6 +198,15 @@
             },
             showCategory(index, row){
                 this.$router.push({ path: 'categoryGoodsList', query: { id: row.id ,level:row.level+1}})
+                this.initData();
+            },
+
+            back(index, row){
+                if(row.level==1){
+                    this.$router.push({ path: 'categoryGoodsList', query: { id: row.pid ,level:row.level}})
+                }else{
+                    this.$router.push({ path: 'categoryGoodsList', query: { id: row.pid ,level:row.level-1}})
+                }
                 this.initData();
             },
             async handleDelete(index, row) {
